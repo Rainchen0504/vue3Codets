@@ -1,16 +1,17 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div class="app">
+    <router-link to="/login">登陆</router-link>
+    <router-link to="/main">首页</router-link>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  components: {}
 })
 </script>
 
