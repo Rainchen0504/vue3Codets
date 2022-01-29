@@ -1,4 +1,5 @@
 <template>
+  <h2>首页</h2>
   <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
 </template>
 
