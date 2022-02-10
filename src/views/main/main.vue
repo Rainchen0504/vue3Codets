@@ -1,15 +1,9 @@
 <template>
-  <div>Main</div>
+  <div>
+    <h2>这是main页面</h2>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup></script>
 
-export default defineComponent({
-  setup() {
-    return {}
-  }
-})
-</script>
-
-<style scoped></style>
+<style lang="scss" scoped></style>

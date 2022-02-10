@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
-// 路由的类型
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
