@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
+    //目标代码（ts -> js）
     "target": "esnext",
+    //模块化方案，es module或者common js,esmodule主要使用的是import和export，commonjs使用的是require和module export
     "module": "esnext",
+    //严格检查
     "strict": true,
+    //如何处理jsx
     "jsx": "preserve",
+    //辅助倒导入功能
     "importHelpers": true,
+    //按照node的方式去解析模版
     "moduleResolution": "node",
+    //跳过一些库的类型检测
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -17,12 +24,6 @@
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
   "exclude": ["node_modules"]
 }
