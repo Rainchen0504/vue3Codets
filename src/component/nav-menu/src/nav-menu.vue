@@ -24,7 +24,7 @@
             </template>
             <!-- 子类项 -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="subitem.id + ''">
+              <el-menu-item :index="subitem.id + ''" @click="handleMenuItemClick(subitem)">
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
             </template>
@@ -56,6 +56,17 @@ const props = defineProps({
 
 const store = useStore()
 const userMenus = computed(() => store.state.login.userMenus)
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+//点击叶子结点触发路由跳转
+const handleMenuItemClick = (item: any) => {
+  console.log('点击按钮', item)
+  router.push({
+    path: item.url ?? '/not-found'
+  })
+}
 </script>
 
 <style scoped lang="less">

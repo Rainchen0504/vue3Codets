@@ -2,6 +2,8 @@ import { Module } from 'vuex'
 import { IRootState } from '../types'
 import { ILoginState } from './types'
 import localCache from '@/utils/cache'
+
+import { mapMenusToRoutes } from '@/utils/map-menus'
 import router from '@/router'
 
 import {
@@ -39,6 +41,14 @@ const loginMoule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+
+      console.log(`在这里动态注册路由`)
+      const routes = mapMenusToRoutes(userMenus)
+
+      //把router和routes拼在一起
+      routes.forEach((itemRoute) => {
+        router.addRoute('main', itemRoute)
+      })
     }
   },
   actions: {
