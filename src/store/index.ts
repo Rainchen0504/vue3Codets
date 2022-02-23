@@ -1,6 +1,7 @@
 import { createStore, Store, useStore as useVuexStore } from 'vuex'
 import { IRootState, IStoreType } from './types'
 import login from './login/login'
+import system from './main/system/system'
 
 const store = createStore<IRootState>({
   state() {
@@ -14,7 +15,8 @@ const store = createStore<IRootState>({
   actions: {},
   modules: {
     //登陆的请求信息、获得的数据、发送其他请求、拿到用户菜单等操作都放到vuex中
-    login
+    login,
+    system
   }
 })
 

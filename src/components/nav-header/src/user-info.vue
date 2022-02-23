@@ -12,7 +12,7 @@
       <!-- 下拉部分 -->
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>退出登陆</el-dropdown-item>
+          <el-dropdown-item @click="outLogin">退出登陆</el-dropdown-item>
           <el-dropdown-item>用户信息</el-dropdown-item>
           <el-dropdown-item>系统管理</el-dropdown-item>
         </el-dropdown-menu>
@@ -25,8 +25,15 @@
 import { computed } from 'vue'
 import { useStore } from '@/store'
 
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 const store = useStore()
 const name = computed(() => store.state.login.userInfo.name)
+
+const outLogin = () => {
+  router.push('/login')
+}
 </script>
 
 <style scoped lang="less">

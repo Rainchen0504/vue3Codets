@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import NavHeader from '@/component/nav-header'
-import NavMenu from '@/component/nav-menu'
+import NavHeader from '@/components/nav-header'
+import NavMenu from '@/components/nav-menu'
 import { ref } from 'vue'
 
 //侧边栏是否收起
@@ -47,6 +47,11 @@ const handleFoldChange = (isFold: boolean) => {
 
 .page-content {
   height: calc(100% - 48px);
+
+  .page-info {
+    background-color: #fff;
+    border-radius: 5px;
+  }
 }
 
 .el-header,

@@ -41,14 +41,15 @@ const loginMoule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
-
+      //这里必须保证组件名称和后台返回的名称保持一致
       console.log(`在这里动态注册路由`)
       const routes = mapMenusToRoutes(userMenus)
 
       //把router和routes拼在一起
-      routes.forEach((itemRoute) => {
-        router.addRoute('main', itemRoute)
+      routes.forEach((route) => {
+        router.addRoute('main', route)
       })
+      console.log('512', routes)
     }
   },
   actions: {
@@ -70,6 +71,8 @@ const loginMoule: Module<ILoginState, IRootState> = {
 
       //3.请求用户菜单
       const userMenusResult = await requestUserMenusByRoleId(userInfo.role.id)
+      console.log('73基础路由', userMenusResult)
+
       const userMenus = userMenusResult.data
       commit('changeUserMenus', userMenus)
       localCache.setCache('userMenus', userMenus)

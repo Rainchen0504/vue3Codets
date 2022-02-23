@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
-import localCache from '../utils/cache'
+import localCache from '@/utils/cache'
+import { firstMenu } from '@/utils/map-menus'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -16,8 +17,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/main',
     name: 'main',
-    component: () => import('@/views/main/main.vue'),
-    children: []
+    component: () => import('@/views/main/main.vue')
+    // children: [] -> 根据userMenus来决定 -> children
   },
   {
     path: '/:pathMatch(.*)*',
@@ -31,18 +32,22 @@ const router = createRouter({
   history: createWebHashHistory()
 })
 
+// 导航守卫
 router.beforeEach((to) => {
-  const token = localCache.getCache('token')
+  console.log('37', to)
+
   if (to.path !== '/login') {
+    const token = localCache.getCache('token')
     if (!token) {
       return '/login'
     }
   }
 
-  if (to.path.indexOf('/main') !== -1) {
-    if (to.name === 'notFound') {
-      to.name = 'user'
-    }
+  // console.log(router.getRoutes())
+  // console.log(to) // route对象
+
+  if (to.path === '/main') {
+    return firstMenu.url
   }
 })
 

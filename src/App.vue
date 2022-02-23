@@ -1,16 +1,14 @@
 <template>
   <div class="app">
-    <router-view></router-view>
+    <!-- 提供全局的配置选项，让配置能够在全局都能够被访问到 -->
+    <el-config-provider :locale="zhCn">
+      <router-view></router-view>
+    </el-config-provider>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'App',
-  components: {}
-})
+<script setup lang="ts">
+import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 </script>
 
 <style lang="less">

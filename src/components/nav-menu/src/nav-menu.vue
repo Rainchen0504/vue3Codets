@@ -8,7 +8,7 @@
 
     <!-- 菜单 -->
     <el-menu
-      default-active="2"
+      default-active="3"
       class="el-menu-vertical"
       :collapse="props.collapse"
       background-color="#0c2135"

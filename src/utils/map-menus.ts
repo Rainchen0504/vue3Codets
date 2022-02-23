@@ -1,9 +1,13 @@
 import { RouteRecordRaw } from 'vue-router'
+import { IBreadcrumb } from '@/base-ui/breadcrumb'
+
+let firstMenu: any = null
 
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
 
-  //先加载默认所有的routes
+  //第一步：先加载默认所有的routes
+
   const allRoutes: RouteRecordRaw[] = []
   //require.context是一个webpack的API，该函数可以获取一个特定的上下文，可以实现自动化导入
   //应用场景：在Vue写的项目中,把路由通过不同的功能划分成不同的模块,在index.js中一个个导入,但是如果项目变大了之后,每次手动import会显得有些力不从心,这里可以使用require.context函数遍历modules文件夹的所有文件一次性导入到index.js中
@@ -11,11 +15,13 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routeFiles = require.context('../router/main', true, /\.ts/)
 
   routeFiles.keys().forEach((key) => {
+    //key可以拿到基于router/main目录下的所有路由地址
     const route = require('../router/main' + key.split('.')[1])
     allRoutes.push(route.default)
   })
 
-  //根据菜单获取需要添加的routes
+  //第二步：根据菜单筛选需要添加的routes
+
   //根据userMenus的数据结构
   //当type为1时说明有子类 children -> type为1
   //当type为2时无子类 url-> toute
@@ -24,6 +30,9 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
       if (menu.type === 2) {
         const route = allRoutes.find((route) => route.path === menu.url)
         if (route) routes.push(route)
+        if (!firstMenu) {
+          firstMenu = menu
+        }
       } else {
         _recurseGetRoute(menu.children)
       }
@@ -34,3 +43,31 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 
   return routes
 }
+
+export function pathMapBreadcrumbs(userMenus: any[], currentPath: string) {
+  const breadcrumbs: IBreadcrumb[] = []
+  pathMapToMenu(userMenus, currentPath, breadcrumbs)
+  return breadcrumbs
+}
+
+// /main/system/role  -> type === 2 对应menu
+export function pathMapToMenu(
+  userMenus: any[],
+  currentPath: string,
+  breadcrumbs?: IBreadcrumb[]
+): any {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
+      if (findMenu) {
+        breadcrumbs?.push({ name: menu.name })
+        breadcrumbs?.push({ name: findMenu.name })
+        return findMenu
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}
+
+export { firstMenu }
