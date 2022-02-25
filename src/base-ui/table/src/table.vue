@@ -5,7 +5,7 @@
       <!-- 遍历表格列 -->
       <template v-for="propItem in propList" :key="propItem.prop">
         <el-table-column v-bind="propItem" align="center">
-          <!-- 配置具名插槽 -->
+          <!-- 自定义列的显示内容 -->
           <template #default="scope">
             <slot :name="propItem.slotName" :row="scope.row">
               {{ scope.row[propItem.prop] }}
@@ -19,10 +19,12 @@
 
 <script setup lang="ts">
 const props = defineProps({
+  //表体数据
   listData: {
     type: Array,
     required: true
   },
+  //表头对象信息
   propList: {
     type: Array,
     required: true

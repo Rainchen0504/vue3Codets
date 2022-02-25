@@ -58,6 +58,7 @@ import { ref, watch, PropType } from 'vue'
 import { IFormItem } from '../types'
 
 const props = defineProps({
+  //
   modelValue: {
     type: Object,
     required: true
@@ -91,6 +92,7 @@ const emit = defineEmits(['update:modelValue'])
 const formData = ref({ ...props.modelValue })
 
 watch(
+  //监听表单中双向绑定的值，在值变化的时候（也就是填写时）把值发送给父组件显示和操作
   formData,
   (newValue) => {
     emit('update:modelValue', newValue)
@@ -99,4 +101,8 @@ watch(
 )
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.hy-form {
+  padding-top: 22px;
+}
+</style>

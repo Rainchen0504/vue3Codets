@@ -51,6 +51,7 @@ export function pathMapBreadcrumbs(userMenus: any[], currentPath: string) {
 }
 
 // /main/system/role  -> type === 2 对应menu
+//获取默认展开菜单的数据
 export function pathMapToMenu(
   userMenus: any[],
   currentPath: string,
@@ -58,12 +59,14 @@ export function pathMapToMenu(
 ): any {
   for (const menu of userMenus) {
     if (menu.type === 1) {
+      //如果类型为1时，即有子菜单的情况下，继续递归扁平化菜单
       const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
       if (findMenu) {
         breadcrumbs?.push({ name: menu.name })
         breadcrumbs?.push({ name: findMenu.name })
         return findMenu
       }
+      //当没有子菜单的情况下，如果当前链接和遍历的菜单url相同时，返回菜单对象
     } else if (menu.type === 2 && menu.url === currentPath) {
       return menu
     }

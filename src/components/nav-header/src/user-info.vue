@@ -1,7 +1,7 @@
 <template>
   <div class="user-info">
     <el-dropdown>
-      <!-- 头像 -->
+      <!-- 头像名称 -->
       <span class="el-dropdown-link">
         <el-avatar
           size="small"
@@ -9,7 +9,7 @@
         ></el-avatar>
         <span>{{ name }}</span>
       </span>
-      <!-- 下拉部分 -->
+      <!-- 下拉菜单 -->
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item @click="outLogin">退出登陆</el-dropdown-item>
@@ -31,6 +31,7 @@ const router = useRouter()
 const store = useStore()
 const name = computed(() => store.state.login.userInfo.name)
 
+//退出登陆，不止退出到登陆页，也要清除本地存储
 const outLogin = () => {
   router.push('/login')
 }

@@ -1,14 +1,14 @@
 <template>
   <div class="nav-menu">
     <div class="logo">
-      <!-- 在template模板中使用别名饿语法是～@ -->
+      <!-- 在template模板中使用别名的语法是～@ -->
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
       <span v-if="!collapse" class="title">Vue3+TS</span>
     </div>
 
     <!-- 菜单 -->
     <el-menu
-      default-active="3"
+      :default-active="defaultValue"
       class="el-menu-vertical"
       :collapse="props.collapse"
       background-color="#0c2135"
@@ -16,13 +16,15 @@
       active-text-color="#0a60bd"
     >
       <template v-for="item in userMenus" :key="item.id">
+        <!-- 二级菜单 -->
         <template v-if="item.type === 1">
+          <!-- 二级菜单可展开的标题 -->
           <el-sub-menu :index="item.id + ''">
             <!-- 标题 -->
             <template #title>
               <span>{{ item.name }}</span>
             </template>
-            <!-- 子类项 -->
+            <!-- 二级菜单里面的子类 -->
             <template v-for="subitem in item.children" :key="subitem.id">
               <el-menu-item :index="subitem.id + ''" @click="handleMenuItemClick(subitem)">
                 <span>{{ subitem.name }}</span>
@@ -44,10 +46,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from '@/store'
+import { pathMapToMenu } from '@/utils/map-menus'
 
 const props = defineProps({
+  //是否水平折叠收起菜单
   collapse: {
     type: Boolean,
     default: false
@@ -55,14 +59,20 @@ const props = defineProps({
 })
 
 const store = useStore()
+//登陆后存在vuex里的用户菜单
 const userMenus = computed(() => store.state.login.userMenus)
 
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
+const route = useRoute()
+
+//默认打开的菜单，把菜单和页面路由联系起来。
+const currentPath = route.path
+const menu = pathMapToMenu(userMenus.value, currentPath)
+const defaultValue = ref(menu.id + '')
 
 //点击叶子结点触发路由跳转
 const handleMenuItemClick = (item: any) => {
-  console.log('点击按钮', item)
   router.push({
     path: item.url ?? '/not-found'
   })

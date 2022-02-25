@@ -14,7 +14,9 @@ import { IBreadcrumb } from '../types'
 
 const props = defineProps({
   breadcrumbs: {
+    //使用断言as
     type: Array as PropType<IBreadcrumb[]>,
+    // Props在设置默认值default时若值类型为Object或者Array时不能直接default而是需要使用函数通过return将值返回出来才可以
     default: () => []
   }
 })
