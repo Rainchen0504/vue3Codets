@@ -1,4 +1,5 @@
 <template>
+  <!-- 顶部组件，包括伸缩和右侧个人信息 -->
   <div class="nav-header">
     <!-- 图标部分 -->
     <el-icon class="fold-menu" @click="handleFoldClick"
@@ -14,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import UserInfo from './user-info.vue'
 //引入面包屑组件
 import HyBreadcrumb, { IBreadcrumb } from '@/base-ui/breadcrumb'
 import { pathMapBreadcrumbs } from '@/utils/map-menus'
@@ -21,12 +23,12 @@ import { pathMapBreadcrumbs } from '@/utils/map-menus'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
 
-import UserInfo from './user-info.vue'
 //引入图标
 import { Expand } from '@element-plus/icons-vue'
 import { Fold } from '@element-plus/icons-vue'
 
 import { ref, computed } from 'vue'
+
 const isFold = ref(false)
 
 const emits = defineEmits(['foldChange'])

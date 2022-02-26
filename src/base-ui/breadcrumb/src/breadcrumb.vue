@@ -1,4 +1,5 @@
 <template>
+  <!-- 面包屑组件 -->
   <div class="nav-breadcrumb">
     <el-breadcrumb separator="/">
       <template v-for="item in props.breadcrumbs" :key="item.name">

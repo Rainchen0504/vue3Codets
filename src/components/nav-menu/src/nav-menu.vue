@@ -1,4 +1,5 @@
 <template>
+  <!-- 导航菜单组件 -->
   <div class="nav-menu">
     <div class="logo">
       <!-- 在template模板中使用别名的语法是～@ -->
@@ -15,6 +16,7 @@
       text-color="#b7bdc3"
       active-text-color="#0a60bd"
     >
+      <!-- 动态参数包括：默认激活菜单id；水平伸缩菜单属性 -->
       <template v-for="item in userMenus" :key="item.id">
         <!-- 二级菜单 -->
         <template v-if="item.type === 1">
@@ -50,6 +52,10 @@ import { ref, computed } from 'vue'
 import { useStore } from '@/store'
 import { pathMapToMenu } from '@/utils/map-menus'
 
+const store = useStore()
+//登陆后存在vuex里的用户菜单
+const userMenus = computed(() => store.state.login.userMenus)
+
 const props = defineProps({
   //是否水平折叠收起菜单
   collapse: {
@@ -57,10 +63,6 @@ const props = defineProps({
     default: false
   }
 })
-
-const store = useStore()
-//登陆后存在vuex里的用户菜单
-const userMenus = computed(() => store.state.login.userMenus)
 
 import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
@@ -114,7 +116,7 @@ const handleMenuItemClick = (item: any) => {
     }
   }
 
-  /deep/ .el-sub-menu__title {
+  ::v-deep .el-sub-menu__title {
     background-color: #001529 !important;
   }
 

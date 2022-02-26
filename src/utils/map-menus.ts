@@ -1,13 +1,13 @@
 import { RouteRecordRaw } from 'vue-router'
 import { IBreadcrumb } from '@/base-ui/breadcrumb'
 
+//首次加载菜单
 let firstMenu: any = null
 
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
 
   //第一步：先加载默认所有的routes
-
   const allRoutes: RouteRecordRaw[] = []
   //require.context是一个webpack的API，该函数可以获取一个特定的上下文，可以实现自动化导入
   //应用场景：在Vue写的项目中,把路由通过不同的功能划分成不同的模块,在index.js中一个个导入,但是如果项目变大了之后,每次手动import会显得有些力不从心,这里可以使用require.context函数遍历modules文件夹的所有文件一次性导入到index.js中
@@ -44,6 +44,7 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   return routes
 }
 
+//返回面包屑中所需的参数，包括当前路由和父路由
 export function pathMapBreadcrumbs(userMenus: any[], currentPath: string) {
   const breadcrumbs: IBreadcrumb[] = []
   pathMapToMenu(userMenus, currentPath, breadcrumbs)
@@ -64,6 +65,7 @@ export function pathMapToMenu(
       if (findMenu) {
         breadcrumbs?.push({ name: menu.name })
         breadcrumbs?.push({ name: findMenu.name })
+
         return findMenu
       }
       //当没有子菜单的情况下，如果当前链接和遍历的菜单url相同时，返回菜单对象

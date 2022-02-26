@@ -33,9 +33,11 @@ const loginMoule: Module<ILoginState, IRootState> = {
   },
   getters: {},
   mutations: {
+    // 修改token
     changeToken(state, token: string) {
       state.token = token
     },
+    // 修改用户信息
     changeUserInfo(state, userInfo: any) {
       state.userInfo = userInfo
     },
@@ -49,7 +51,6 @@ const loginMoule: Module<ILoginState, IRootState> = {
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
-      console.log('512', routes)
     }
   },
   actions: {

@@ -1,4 +1,5 @@
 import { ILoginState } from './login/types'
+import { ISystemState } from './main/system/types'
 
 //vuex根目录下state中的数据类型
 export interface IRootState {
@@ -8,6 +9,7 @@ export interface IRootState {
 
 export interface IRootWithModule {
   login: ILoginState
+  system: ISystemState
 }
 
 //

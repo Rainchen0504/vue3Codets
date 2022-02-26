@@ -34,8 +34,6 @@ const router = createRouter({
 
 // 导航守卫
 router.beforeEach((to) => {
-  console.log('37', to)
-
   if (to.path !== '/login') {
     const token = localCache.getCache('token')
     if (!token) {

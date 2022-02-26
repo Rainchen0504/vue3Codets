@@ -1,4 +1,5 @@
 <template>
+  <!-- 表单组件 -->
   <div class="hy-form">
     <!-- 头部插槽 -->
     <div class="header">
@@ -9,7 +10,7 @@
       <el-row>
         <template v-for="item in props.formItems" :key="item.label">
           <!-- 布局配置，响应式格栅属性，即不同分辨率下每行分为多少份 -->
-          <el-col v-bind="props.colLayout">
+          <el-col :span="props.colLayout.span">
             <el-form-item :label="item.label" :rules="item.rules" :style="props.itemStyle">
               <template v-if="item.type === 'input' || item.type === 'password'">
                 <el-input
@@ -89,6 +90,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
+//拷贝表单的值，避免直接修改父组件传进来的值
 const formData = ref({ ...props.modelValue })
 
 watch(
