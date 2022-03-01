@@ -1,4 +1,5 @@
 import { createStore, Store, useStore as useVuexStore } from 'vuex'
+
 import { IRootState, IStoreType } from './types'
 import login from './login/login'
 import system from './main/system/system'

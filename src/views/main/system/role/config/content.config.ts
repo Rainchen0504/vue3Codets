@@ -20,3 +20,5 @@ const contentTableConfig = {
   showIndexColumn: true,
   showSelectColumn: true
 }
+
+export { contentTableConfig }

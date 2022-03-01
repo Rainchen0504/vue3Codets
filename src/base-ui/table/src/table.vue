@@ -53,11 +53,12 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="10"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="40"
-        ></el-pagination>
+          :total="400"
+        >
+        </el-pagination>
       </slot>
     </div>
   </div>
@@ -115,10 +116,8 @@ const handleSelectionChange = (value: any) => {
 }
 
 .footer {
-  margin-top: 10px;
-
-  .el-pagination {
-    text-align: right;
-  }
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

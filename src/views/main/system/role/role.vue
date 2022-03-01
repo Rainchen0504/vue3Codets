@@ -1,7 +1,7 @@
 <template>
   <div class="role">
-    <PageContent :searchFormConfig="searchFormConfig"></PageContent>
-    <PageSearch :contentTableConfig="contentTableConfig" pageName="role"></PageSearch>
+    <PageSearch :searchFormConfig="searchFormConfig"></PageSearch>
+    <PageContent :contentTableConfig="contentTableConfig" pageName="role"></PageContent>
   </div>
 </template>
 

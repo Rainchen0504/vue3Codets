@@ -2,7 +2,7 @@
   <!-- 搜索表单组件，可配置生成 -->
   <div class="page-search">
     <!-- 引入封装的form组件 -->
-    <hy-form v-bind="props.searchFormConfig" v-model="formData">
+    <HyForm v-bind="props.searchFormConfig" v-model="formData">
       <template #header>
         <h1 class="header">搜索部分</h1>
       </template>
@@ -16,7 +16,7 @@
           >
         </div>
       </template>
-    </hy-form>
+    </HyForm>
   </div>
 </template>
 

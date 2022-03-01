@@ -1,4 +1,4 @@
-type IFormType = 'input' | 'select' | 'password' | 'datepicker'
+type IFormType = 'input' | 'password' | 'select' | 'datepicker'
 
 //表单组件接收父组件传过来的数据配置项的类型
 export interface IFormItem {
@@ -7,7 +7,9 @@ export interface IFormItem {
   label: string
   rules?: any[]
   placeholder?: any
+  // 针对select
   options?: any[]
+  // 针对特殊的属性
   otherOptions?: any
 }
 
@@ -15,6 +17,6 @@ export interface IFormItem {
 export interface IForm {
   formItems: IFormItem[]
   labelWidth?: string
-  colLayout: any
-  itemLayout: any
+  colLayout?: any
+  itemLayout?: any
 }
