@@ -24,8 +24,6 @@ const systemModule: Module<ISystemState, IRootState> = {
   getters: {},
   actions: {
     async getPageListAction({ commit }, payload: any) {
-      console.log('27', payload)
-
       // 1.对页面发送请求，拿到表格列表数据
       const pageResult = await getPageListData(payload.pageUrl, payload.queryInfo)
 

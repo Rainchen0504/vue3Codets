@@ -4,9 +4,13 @@
 
     <div class="content">
       <HyTable :listData="userList" :propList="propList">
+        <!-- 状态插槽 -->
         <template #status="scope">
-          <el-button>{{ scope.row.enable ? '启用' : '禁用' }}</el-button>
+          <el-button plain size="mini" :type="scope.row.enable ? 'success' : 'danger'">{{
+            scope.row.enable ? '启用' : '禁用'
+          }}</el-button>
         </template>
+        <!-- 时间插槽 -->
         <template #createAt="scope">
           <strong>{{ scope.row.createAt }}</strong>
         </template>
