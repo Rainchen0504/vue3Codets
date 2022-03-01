@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { globalRegister } from './global'
 import 'normalize.css'
 import './assets/css/index.less'
 
@@ -15,6 +16,7 @@ import { setupStore } from './store'
 const app = createApp(App)
 
 app.use(ElementPlus)
+app.use(globalRegister)
 app.use(store)
 
 setupStore()
