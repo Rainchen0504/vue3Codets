@@ -14,7 +14,11 @@ const systemModule: Module<ISystemState, IRootState> = {
       //user页面列表数据总数
       usersCount: 0,
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      goodsList: [],
+      goodsCount: 0,
+      menuList: [],
+      menuCount: 0
     }
   },
   mutations: {
@@ -29,6 +33,18 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeRoleCount(state, count: number) {
       state.roleCount = count
+    },
+    changeGoodsList(state, list: any[]) {
+      state.goodsList = list
+    },
+    changeGoodsCount(state, count: number) {
+      state.goodsCount = count
+    },
+    changeMenuList(state, list: any[]) {
+      state.menuList = list
+    },
+    changeMenuCount(state, count: number) {
+      state.menuCount = count
     }
   },
   getters: {
@@ -36,16 +52,18 @@ const systemModule: Module<ISystemState, IRootState> = {
       return (pageName: string) => {
         return (state as any)[`${pageName}List`]
       }
+    },
+    pageListCount(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}Count`]
+      }
     }
   },
   actions: {
     async getPageListAction({ commit }, payload: any) {
       //获取pageUrl
       const pageName = payload.pageName
-      console.log('47', pageName)
-
       const pageUrl = `/${pageName}/list`
-      console.log('50', pageUrl)
 
       // 对页面发送请求，拿到表格列表数据
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)

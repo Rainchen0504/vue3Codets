@@ -3,7 +3,7 @@ import { IRootState } from '../types'
 import { ILoginState } from './types'
 import localCache from '@/utils/cache'
 
-import { mapMenusToRoutes } from '@/utils/map-menus'
+import { mapMenusToPermissions, mapMenusToRoutes } from '@/utils/map-menus'
 import router from '@/router'
 
 import {
@@ -28,7 +28,8 @@ const loginMoule: Module<ILoginState, IRootState> = {
       //请求回来的用户信息
       userInfo: {},
       //用户菜单
-      userMenus: []
+      userMenus: [],
+      permissions: []
     }
   },
   getters: {},
@@ -51,6 +52,10 @@ const loginMoule: Module<ILoginState, IRootState> = {
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
+
+      //获取按钮的权限
+      const permissions = mapMenusToPermissions(userMenus)
+      state.permissions = permissions
     }
   },
   actions: {

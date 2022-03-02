@@ -19,8 +19,7 @@
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
                   :show-password="item.type === 'password'"
-                  :model-value="modelValue[`${item.field}`]"
-                  @unddate:modelValue="handleValueChange($event, item.field)"
+                  v-model="formData[`${item.field}`]"
                 />
               </template>
               <!-- 选择栏 -->
@@ -29,8 +28,7 @@
                   :placeholder="item.palceholder"
                   v-bind="item.otherOptions"
                   style="width: 100%"
-                  :model-value="modelValue[`${item.field}`]"
-                  @unddate:modelValue="handleValueChange($event, item.field)"
+                  v-model="formData[`${item.field}`]"
                 >
                   <!-- 选项框 -->
                   <el-option
@@ -46,8 +44,7 @@
                 <el-date-picker
                   style="width: 100%"
                   v-bind="item.otherOptions"
-                  :model-value="modelValue[`${item.field}`]"
-                  @unddate:modelValue="handleValueChange($event, item.field)"
+                  v-model="formData[`${item.field}`]"
                 ></el-date-picker>
               </template>
             </el-form-item>
@@ -96,11 +93,19 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
 
-const handleValueChange = (value: any, field: string) => {
-  emits('update:modelValue', { ...props.modelValue, [field]: value })
-}
+//拷贝表单的值，避免直接修改
+const formData = ref({ ...props.modelValue })
+
+watch(
+  //监听表单中双向绑定的值，在值变化的时候（也就是填写时）把值发送给父组件显示和操作
+  formData,
+  (newValue) => {
+    emit('update:modelValue', newValue)
+  },
+  { deep: true }
+)
 </script>
 
 <style scoped lang="less">

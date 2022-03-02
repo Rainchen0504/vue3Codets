@@ -15,6 +15,7 @@
       border
       style="width: 100%"
       @selection-change="handleSelectionChange"
+      v-bind="childrenProps"
     >
       <!-- 配置checkbox列 -->
       <el-table-column
@@ -52,11 +53,11 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :current-page="page.currentPage"
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="page.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="listCount"
         >
         </el-pagination>
       </slot>
@@ -65,6 +66,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
 const props = defineProps({
   title: {
     type: String,
@@ -74,6 +77,10 @@ const props = defineProps({
   listData: {
     type: Array,
     required: true
+  },
+  listCount: {
+    type: Number,
+    default: 0
   },
   //表头对象信息
   propList: {
@@ -87,13 +94,35 @@ const props = defineProps({
   showSelectColumn: {
     type: Boolean,
     default: false
+  },
+  //后台请求回来的page对象
+  page: {
+    type: Object,
+    default: () => ({ currentPage: 0, pageSize: 10 })
+  },
+  // 渲染嵌套数据的配置选项,必须设置row-key，再tree-props中设置children
+  childrenProps: {
+    type: Object,
+    default: () => ({})
+  },
+  showFooter: {
+    type: Boolean,
+    default: true
   }
 })
 
-const emits = defineEmits(['selectionChange'])
+const emits = defineEmits(['selectionChange', 'update:page'])
 
 const handleSelectionChange = (value: any) => {
   emits('selectionChange', value)
+}
+
+const handleSizeChange = (currentPage: number) => {
+  emits('update:page', { ...props.page, currentPage })
+}
+
+const handleCurrentChange = (pageSize: number) => {
+  emits('update:page', { ...props.page, pageSize })
 }
 </script>
 
