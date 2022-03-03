@@ -2,11 +2,11 @@
   <div class="main">
     <el-container class="main-content">
       <el-aside :width="isCollapse ? '60px' : '210px'">
-        <NavMenu :collapse="isCollapse" />
+        <nav-menu :collapse="isCollapse" />
       </el-aside>
       <el-container class="page">
         <el-header class="page-header">
-          <NavHeader @foldChange="handleFoldChange" />
+          <nav-header @foldChange="handleFoldChange" />
         </el-header>
         <el-main class="page-content">
           <div class="page-info">

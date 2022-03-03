@@ -1,22 +1,16 @@
 <template>
-  <!-- 搜索表单组件，可配置生成 -->
   <div class="page-search">
-    <!-- 引入封装的form组件 -->
-    <HyForm v-bind="props.searchFormConfig" v-model="formData">
+    <hy-form v-bind="searchFormConfig" v-model="formData">
       <template #header>
-        <h1 class="header">搜索部分</h1>
+        <!-- <h1 class="header">高级检索</h1> -->
       </template>
       <template #footer>
         <div class="handle-btns">
-          <el-button @click="handleResetClick">
-            <el-icon><refresh /></el-icon>重置</el-button
-          >
-          <el-button type="primary" @click="handleQueryClick"
-            ><el-icon><search /></el-icon>搜索</el-button
-          >
+          <el-button @click="handleResetClick">重置</el-button>
+          <el-button type="primary" @click="handleQueryClick">搜索</el-button>
         </div>
       </template>
-    </HyForm>
+    </hy-form>
   </div>
 </template>
 
@@ -24,44 +18,40 @@
 import { ref } from 'vue'
 import HyForm from '@/base-ui/form'
 
-import { Refresh } from '@element-plus/icons-vue'
-import { Search } from '@element-plus/icons-vue'
-
 const props = defineProps({
-  //配置文件
   searchFormConfig: {
     type: Object,
-    required: true
+    reuqired: true
   }
 })
 
 const emits = defineEmits(['resetBtnClick', 'queryBtnClick'])
-//1、逻辑一
-//搜索框双向绑定的属性值应该是由配置文件的属性来决定的
-//符号？？的意思是当左侧返回null和undefined时才会返回右侧的数
+
+// 双向绑定的属性应该是由配置文件的field来决定
+// 1.优化一: formData中的属性应该动态来决定
 const formItems = props.searchFormConfig?.formItems ?? []
-//初始化formData数组
 const formOriginData: any = {}
 for (const item of formItems) {
   formOriginData[item.field] = ''
 }
-//hyform表单绑定值初始值，把传过来的searchFormConfig中formItems中的field的值都设置为空
 const formData = ref(formOriginData)
 
-//2、逻辑二
-//点击重置按钮,需要把formData的值恢复成初始化formOriginData的值
+// 2.优化二: 当用户点击重置
 const handleResetClick = () => {
+  // for (const key in formOriginData) {
+  //   formData.value[`${key}`] = formOriginData[key]
+  // }
   formData.value = formOriginData
   emits('resetBtnClick')
 }
 
-// 点击搜索时
+// 3.优化三: 当用户点击搜索
 const handleQueryClick = () => {
   emits('queryBtnClick', formData.value)
 }
 </script>
 
-<style scoped lang="less">
+<style scoped>
 .handle-btns {
   text-align: right;
   padding: 0 50px 20px 0;

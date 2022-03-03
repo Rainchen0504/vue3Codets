@@ -77,7 +77,6 @@ const loginMoule: Module<ILoginState, IRootState> = {
 
       //3.请求用户菜单
       const userMenusResult = await requestUserMenusByRoleId(userInfo.role.id)
-      console.log('73基础路由', userMenusResult)
 
       const userMenus = userMenusResult.data
       commit('changeUserMenus', userMenus)

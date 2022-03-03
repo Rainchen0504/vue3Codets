@@ -1,29 +1,32 @@
 <template>
   <div class="page-content">
     <!-- 传参表体数据和配置项 -->
-    <hy-table
+    <HyTable
       :listData="dataList"
       :listCount="dataCount"
       v-bind="contentTableConfig"
       v-model:page="pageInfo"
     >
-      <!-- 1.header中的插槽 -->
+      <!-- header中的插槽 -->
       <template #headerHandler>
         <el-button v-if="isCreate" type="primary" size="default">新建用户</el-button>
       </template>
 
-      <!-- 2.列中的插槽 -->
+      <!-- 列中的插槽1状态列 -->
       <template #status="scope">
-        <el-button plain size="small" :type="scope.row.enable ? 'success' : 'danger'">
-          {{ scope.row.enable ? '启用' : '禁用' }}
-        </el-button>
+        <el-button plain size="small" :type="scope.row.enable ? 'success' : 'danger'">{{
+          scope.row.enable ? '启用' : '禁用'
+        }}</el-button>
       </template>
+      <!-- 列中的插槽2创建时间 -->
       <template #createAt="scope">
         <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
       </template>
+      <!-- 列中的插槽3更新时间 -->
       <template #updateAt="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
+      <!-- 插槽操作列 -->
       <template #handler>
         <div class="handle-btns">
           <el-button v-if="isUpdate" size="small" type="text">编辑</el-button>
@@ -37,7 +40,7 @@
           <slot :name="item.slotName" :row="scope.row"></slot>
         </template>
       </template>
-    </hy-table>
+    </HyTable>
   </div>
 </template>
 
@@ -73,6 +76,8 @@ watch(pageInfo, () => getPageData())
 
 //声明发送请求的方法,重置时不用传参数，搜索时要传参
 const getPageData = (queryInfo: any = {}) => {
+  console.log('97', queryInfo)
+
   if (!isQuery) return
   store.dispatch('system/getPageListAction', {
     pageName: props.pageName,
@@ -99,11 +104,9 @@ const otherPropSlots = props.contentTableConfig?.propList.filter((item: any) => 
   if (item.slotName === 'handler') return false
   return true
 })
-
-defineExpose({ getPageData })
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .page-content {
   padding: 20px;
   border-top: 20px solid #f5f5f5;

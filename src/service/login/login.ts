@@ -1,6 +1,6 @@
 import hyRequest from '../index'
-import { IAccount, IPhone, ILoginResult, IDataType } from './type'
-
+import { IAccount, IPhone, ILoginResult } from './type'
+import { IDataType } from '../types'
 //枚举类型定义接口
 enum LoginAPI {
   AccountLogin = '/login',

@@ -2,36 +2,42 @@
   <div class="hy-table">
     <div class="header">
       <slot name="header">
-        <div class="title">{{ title }}</div>
+        <div class="title">{{ props.title }}</div>
         <div class="handler">
           <slot name="headerHandler"></slot>
         </div>
       </slot>
     </div>
 
+    <!-- 封装表格 -->
     <el-table
-      :data="listData"
+      :data="props.listData"
       border
       style="width: 100%"
       @selection-change="handleSelectionChange"
       v-bind="childrenProps"
     >
+      <!-- 配置checkbox列 -->
       <el-table-column
-        v-if="showSelectColumn"
+        v-if="props.showSelectColumn"
         type="selection"
         align="center"
         width="60"
       ></el-table-column>
+
+      <!-- 配置序号列 -->
       <el-table-column
-        v-if="showIndexColumn"
+        v-if="props.showIndexColumn"
         type="index"
         label="序号"
         align="center"
         width="80"
       ></el-table-column>
 
-      <template v-for="propItem in propList" :key="propItem.prop">
+      <!-- 遍历表格列 -->
+      <template v-for="propItem in props.propList" :key="propItem.prop">
         <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
+          <!-- 自定义列的显示内容 -->
           <template #default="scope">
             <slot :name="propItem.slotName" :row="scope.row">
               {{ scope.row[propItem.prop] }}
@@ -41,6 +47,7 @@
       </template>
     </el-table>
 
+    <!-- 翻页组件 -->
     <div class="footer" v-if="showFooter">
       <slot name="footer">
         <el-pagination
@@ -50,7 +57,7 @@
           :page-size="page.pageSize"
           :page-sizes="[10, 20, 30]"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="listCount"
+          :total="props.listCount"
         >
         </el-pagination>
       </slot>
@@ -64,6 +71,7 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  //表体数据
   listData: {
     type: Array,
     required: true
@@ -72,6 +80,7 @@ const props = defineProps({
     type: Number,
     default: 0
   },
+  //表头对象信息
   propList: {
     type: Array,
     required: true
@@ -109,7 +118,6 @@ const handleSelectionChange = (value: any) => {
 const handleCurrentChange = (currentPage: number) => {
   emits('update:page', { ...props.page, currentPage })
 }
-
 const handleSizeChange = (pageSize: number) => {
   emits('update:page', { ...props.page, pageSize })
 }
@@ -135,9 +143,7 @@ const handleSizeChange = (pageSize: number) => {
 
 .footer {
   margin-top: 15px;
-
-  .el-pagination {
-    text-align: right;
-  }
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

@@ -61,15 +61,16 @@ const systemModule: Module<ISystemState, IRootState> = {
   },
   actions: {
     async getPageListAction({ commit }, payload: any) {
-      //获取pageUrl
+      // 1.获取pageUrl
       const pageName = payload.pageName
       const pageUrl = `/${pageName}/list`
 
-      // 对页面发送请求，拿到表格列表数据
+      // 2.对页面发送请求
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
 
-      // 2.将数据存储到state中
+      // 3.将数据存储到state中
       const { list, totalCount } = pageResult.data
+
       const changePageName = pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
 
       //表格数据对象数组

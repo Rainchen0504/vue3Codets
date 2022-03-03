@@ -74,6 +74,7 @@ export function pathMapToMenu(
     }
   }
 }
+
 export function mapMenusToPermissions(userMenus: any[]) {
   const permissions: string[] = []
 
