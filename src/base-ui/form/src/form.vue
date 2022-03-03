@@ -11,14 +11,19 @@
         <template v-for="item in formItems" :key="item.label">
           <!-- 布局配置，响应式格栅属性，即不同分辨率下每行分为多少份 -->
           <el-col :span="props.colLayout.span">
-            <el-form-item :label="item.label" :rules="item.rules" :style="itemStyle">
+            <el-form-item
+              v-if="!item.isHidden"
+              :label="item.label"
+              :rules="item.rules"
+              :style="itemStyle"
+            >
               <template v-if="item.type === 'input' || item.type === 'password'">
+                <!-- 默认情况下，组件的v-modal使用:modal-value和@update:modelValue -->
                 <el-input
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
                   :show-password="item.type === 'password'"
-                  :model-value="modelValue[`${item.field}`]"
-                  @update:modelValue="handleValueChange($event, item.field)"
+                  v-model="formData[`${item.field}`]"
                 />
               </template>
 
@@ -27,8 +32,7 @@
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
                   style="width: 100%"
-                  :model-value="modelValue[`${item.field}`]"
-                  @update:modelValue="handleValueChange($event, item.field)"
+                  v-model="formData[`${item.field}`]"
                 >
                   <el-option
                     v-for="option in item.options"
@@ -43,8 +47,7 @@
                 <el-date-picker
                   style="width: 100%"
                   v-bind="item.otherOptions"
-                  :model-value="modelValue[`${item.field}`]"
-                  @update:modelValue="handleValueChange($event, item.field)"
+                  v-model="formData[`${item.field}`]"
                 ></el-date-picker>
               </template>
             </el-form-item>
@@ -59,10 +62,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { PropType, watch, ref } from 'vue'
 import { IFormItem } from '../types'
 
 const props = defineProps({
+  //从page-search传进来双向绑定的值
   modelValue: {
     type: Object,
     required: true
@@ -77,7 +81,7 @@ const props = defineProps({
   },
   itemStyle: {
     type: Object,
-    default: () => ({ padding: '10px 40px' })
+    default: () => ({ padding: '10px 10px' })
   },
   colLayout: {
     type: Object,
@@ -92,9 +96,18 @@ const props = defineProps({
 })
 const emits = defineEmits(['update:modelValue'])
 
-const handleValueChange = (value: any, field: string) => {
-  emits('update:modelValue', { ...props.modelValue, [field]: value })
-}
+const formData = ref({ ...props.modelValue })
+watch(
+  formData,
+  (newValue) => {
+    emits('update:modelValue', newValue)
+  },
+  { deep: true }
+)
+
+// const handleValueChange = (value: any, field: string) => {
+//   emits('update:modelValue', { ...props.modelValue, [field]: value })
+// }
 </script>
 
 <style scoped lang="less">

@@ -76,8 +76,6 @@ watch(pageInfo, () => getPageData())
 
 //声明发送请求的方法,重置时不用传参数，搜索时要传参
 const getPageData = (queryInfo: any = {}) => {
-  console.log('97', queryInfo)
-
   if (!isQuery) return
   store.dispatch('system/getPageListAction', {
     pageName: props.pageName,

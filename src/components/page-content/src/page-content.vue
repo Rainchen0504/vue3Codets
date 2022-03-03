@@ -9,7 +9,9 @@
     >
       <!-- 1.header中的插槽 -->
       <template #headerHandler>
-        <el-button v-if="isCreate" type="primary" size="default">新建用户</el-button>
+        <el-button v-if="isCreate" type="primary" size="default" @click="handleNewClick"
+          >新建用户</el-button
+        >
       </template>
 
       <!-- 2.列中的插槽 -->
@@ -24,10 +26,14 @@
       <template #updateAt="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
-      <template #handler>
+      <template #handler="scope">
         <div class="handle-btns">
-          <el-button v-if="isUpdate" size="small" type="text">编辑</el-button>
-          <el-button v-if="isDelete" size="small" type="text">删除</el-button>
+          <el-button v-if="isUpdate" size="small" type="text" @click="handleEditClick(scope.row)"
+            >编辑</el-button
+          >
+          <el-button v-if="isDelete" size="small" type="text" @click="handleDeleteClick(scope.row)"
+            >删除</el-button
+          >
         </div>
       </template>
 
@@ -67,11 +73,11 @@ const isUpdate = usePermission(props.pageName, 'update')
 const isDelete = usePermission(props.pageName, 'delete')
 const isQuery = usePermission(props.pageName, 'query')
 
-//双向绑定pageinfo
+//1、双向绑定pageinfo
 const pageInfo = ref({ currentPage: 0, pageSize: 10 })
 watch(pageInfo, () => getPageData())
 
-//声明发送请求的方法,重置时不用传参数，搜索时要传参
+//2、声明发送请求的方法,重置时不用传参数，搜索时要传参
 const getPageData = (queryInfo: any = {}) => {
   if (!isQuery) return
   store.dispatch('system/getPageListAction', {
@@ -99,6 +105,22 @@ const otherPropSlots = props.contentTableConfig?.propList.filter((item: any) => 
   if (item.slotName === 'handler') return false
   return true
 })
+
+//删除、编辑、新增操作方法
+const handleDeleteClick = (item: any) => {
+  store.dispatch('system/deletePageDataAction', {
+    pageName: props.pageName,
+    id: item.id
+  })
+}
+
+const emits = defineEmits(['newBtnClick', 'editBtnClick'])
+const handleNewClick = () => {
+  emits('newBtnClick')
+}
+const handleEditClick = () => {
+  emits('editBtnClick')
+}
 
 defineExpose({ getPageData })
 </script>

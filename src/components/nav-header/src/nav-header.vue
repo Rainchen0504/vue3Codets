@@ -39,6 +39,7 @@ const handleFoldClick = () => {
   emits('foldChange', isFold.value)
 }
 
+//面包屑的数据[{name:,path:}]
 const store = useStore()
 const breadcrumbs = computed(() => {
   const userMenus = store.state.login.userMenus
