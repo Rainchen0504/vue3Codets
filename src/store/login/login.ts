@@ -1,10 +1,4 @@
 import { Module } from 'vuex'
-import { IRootState } from '../types'
-import { ILoginState } from './types'
-import localCache from '@/utils/cache'
-
-import { mapMenusToPermissions, mapMenusToRoutes } from '@/utils/map-menus'
-import router from '@/router'
 
 import {
   //账号登陆的请求
@@ -15,6 +9,14 @@ import {
   requestUserMenusByRoleId
 } from '@/service/login/login'
 
+import localCache from '@/utils/cache'
+
+import { mapMenusToPermissions, mapMenusToRoutes } from '@/utils/map-menus'
+
+import router from '@/router'
+
+import { IRootState } from '../types'
+import { ILoginState } from './types'
 import { IAccount, IPhone } from '@/service/login/type'
 
 //Module类型需要两个范型参数，一个是模块state的类型，另一个是根组件state的类型
@@ -45,7 +47,7 @@ const loginMoule: Module<ILoginState, IRootState> = {
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
       //这里必须保证组件名称和后台返回的名称保持一致
-      console.log(`在这里动态注册路由`)
+      //动态注册路由
       const routes = mapMenusToRoutes(userMenus)
 
       //把router和routes拼在一起

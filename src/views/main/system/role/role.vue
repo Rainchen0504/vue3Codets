@@ -1,7 +1,24 @@
 <template>
   <div class="role">
+    <!-- 搜索部分 -->
     <page-search :searchFormConfig="searchFormConfig"></page-search>
-    <page-content :contentTableConfig="contentTableConfig" pageName="role"></page-content>
+    <!-- 内容部分 -->
+    <page-content
+      :contentTableConfig="contentTableConfig"
+      pageName="role"
+      @newBtnClick="handleNewData"
+      @editBtnClick="handleEditData"
+    ></page-content>
+    <!-- 新增编辑表单 -->
+    <page-modal
+      ref="pageModalRef"
+      :defaultInfo="defaultInfo"
+      :otherInfo="otherInfo"
+      :modalConfig="modalConfig"
+      pageName="role"
+    >
+      <div class="menu-tree"></div>
+    </page-modal>
   </div>
 </template>
 

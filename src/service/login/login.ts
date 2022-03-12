@@ -10,7 +10,7 @@ enum LoginAPI {
   UserMenus = '/role/'
 }
 
-function accountLoginRequest(account: IAccount) {
+export function accountLoginRequest(account: IAccount) {
   return hyRequest.post<IDataType<ILoginResult>>({
     url: LoginAPI.AccountLogin,
     data: account
@@ -24,25 +24,23 @@ function accountLoginRequest(account: IAccount) {
 //   })
 // }
 
-function phoneLoginRequest(phone: IPhone) {
+export function phoneLoginRequest(phone: IPhone) {
   return hyRequest.post({
     url: LoginAPI.PhoneLogin,
     data: phone
   })
 }
 
-function requestUserInfoById(id: number) {
+export function requestUserInfoById(id: number) {
   return hyRequest.get<IDataType>({
     url: LoginAPI.LoginUserInfo + id,
     showLoading: false
   })
 }
 
-function requestUserMenusByRoleId(id: number) {
+export function requestUserMenusByRoleId(id: number) {
   return hyRequest.get<IDataType>({
     url: LoginAPI.UserMenus + id + '/menu',
     showLoading: false
   })
 }
-
-export { accountLoginRequest, phoneLoginRequest, requestUserInfoById, requestUserMenusByRoleId }

@@ -6,6 +6,7 @@
       <slot name="header"></slot>
     </div>
     <!-- 表单封装 -->
+    <!-- 表单域标签的宽度 -->
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
