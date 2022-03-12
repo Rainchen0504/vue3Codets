@@ -1,7 +1,7 @@
-const path = require('path')
+// const path = require('path')
 
 module.exports = {
-  outputDir: './build',
+  // outputDir: './build',
   // publicPath: './',
   devServer: {
     proxy: {
@@ -10,6 +10,7 @@ module.exports = {
         pathRewrite: {
           '^/api': ''
         },
+        ws: true,
         changeOrigin: true
       }
     }
