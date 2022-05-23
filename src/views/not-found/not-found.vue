@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Not Found</h2>
+    <h2>Not Found未找到哦</h2>
   </div>
 </template>
 
